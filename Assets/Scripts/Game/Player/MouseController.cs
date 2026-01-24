@@ -3,9 +3,10 @@ using UnityEngine;
 public class MouseController : MonoBehaviour
 {
     private Camera mainCamera;
+    [SerializeField] private float minSpeed = 2f;
+    [SerializeField] private float maxSpeed = 20f;
+    [SerializeField] private float maxDistance = 6f;
 
-    [SerializeField]
-    private float maxSpeed = 10;
     bool controll;
 
     private void Start()
@@ -15,15 +16,23 @@ public class MouseController : MonoBehaviour
 
     private void Update()
     {
-        //if (controll == true)
-        //{
-        //}
-            delayFollowing(maxSpeed);
+        if (controll)
+        {
+            FollowMouseWithDynamicSpeed();
+        }
     }
 
-    private void delayFollowing(float maxSpeed)
+    private void FollowMouseWithDynamicSpeed()
     {
-        transform.position = Vector2.MoveTowards(transform.position, GetWorldPosFromMouse(), maxSpeed * Time.deltaTime);
+        Vector2 targetPos = GetWorldPosFromMouse();
+        float distance = Vector2.Distance(transform.position, targetPos);
+
+        float t = Mathf.Clamp01(distance / maxDistance);
+
+        float currentSpeed = Mathf.Lerp(minSpeed, maxSpeed, t);
+
+
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
     }
 
     private Vector2 GetWorldPosFromMouse()
@@ -31,15 +40,20 @@ public class MouseController : MonoBehaviour
         return mainCamera.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    //private void OnMouseDown()
-    //{
-    //    if (controll == false)
-    //    {
-    //        controll = true;
-    //    }
-    //    //else
-    //    //{
-    //    //    controll = false;
-    //    //}
-    //}
+    private void OnMouseDown()
+    {
+        controll = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Kaca")
+        {
+            Debug.Log("Kalah");
+        }
+        else if (collision.gameObject.tag == "Finish")
+        {
+            Debug.Log("Menang");
+        }
+    }
 }
