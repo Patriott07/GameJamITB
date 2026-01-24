@@ -1,17 +1,32 @@
+using System.Collections;
 using UnityEngine;
 
 public class MouseController : MonoBehaviour
 {
-    private Camera mainCamera;
-    [SerializeField] private float minSpeed = 2f;
-    [SerializeField] private float maxSpeed = 20f;
-    [SerializeField] private float maxDistance = 6f;
+    [Header("Movement")]
+    public float minSpeed = 2f;
+    public float maxSpeed = 20f;
+    public float maxDistance = 6f;
 
-    bool controll;
+    [Header("Jump")]
+    public float jumpScaleMultiplier = 1.3f;
+    public float jumpDuration = 1f;
+    public float jumpCooldown = 0.3f;
+
+    [Header("Push")]
+    [SerializeField] private float pushForce = 8f;
+
+    Camera mainCamera;
+    bool controll, isJumping, abovePushable;
+    BoxCollider2D boxCollider;
+    Vector3 originalScale;
+
 
     private void Start()
     {
         mainCamera = Camera.main;
+        boxCollider = GetComponent<BoxCollider2D>();
+        originalScale = transform.localScale;
     }
 
     private void Update()
@@ -19,7 +34,17 @@ public class MouseController : MonoBehaviour
         if (controll)
         {
             FollowMouseWithDynamicSpeed();
+
+            if (Input.GetMouseButtonDown(1) && !isJumping && !abovePushable)
+            {
+                StartCoroutine(Jumping());
+            }
+            else if (Input.GetMouseButtonDown(1) && !isJumping && abovePushable)
+            {
+                StartCoroutine(JumpingAbovePushable());
+            }
         }
+
     }
 
     private void FollowMouseWithDynamicSpeed()
@@ -54,6 +79,96 @@ public class MouseController : MonoBehaviour
         else if (collision.gameObject.tag == "Finish")
         {
             Debug.Log("Menang");
+            controll = false;
         }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Pushable"))
+        {
+            PushableObject pushable = collision.gameObject.GetComponent<PushableObject>();
+            if (pushable != null)
+            {
+                Vector2 dir = (collision.transform.position - transform.position).normalized;
+                pushable.Push(dir * pushForce);
+            }
+
+            if (isJumping && !abovePushable)
+            {
+                boxCollider.isTrigger = true;
+                abovePushable = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Pushable")
+        {
+            abovePushable = false;
+            boxCollider.isTrigger = false;
+        }
+    }
+
+
+    private IEnumerator Jumping()
+    {
+        isJumping = true;
+        float halfDuration = jumpDuration / 2;
+        Vector3 targetScale = originalScale * jumpScaleMultiplier;
+
+        float time = 0;
+        while (time < halfDuration)
+        {
+            time += Time.deltaTime;
+            float lerp = time / halfDuration;
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, lerp);
+            yield return null;
+        }
+
+        time = 0f;
+        while (time < halfDuration)
+        {
+            time += Time.deltaTime;
+            float lerp = time / halfDuration;
+            transform.localScale = Vector3.Lerp(targetScale, originalScale, lerp);
+            yield return null;
+        }
+
+        transform.localScale = originalScale;
+
+        yield return new WaitForSeconds(jumpCooldown);
+        isJumping = false;
+    }
+
+    private IEnumerator JumpingAbovePushable()
+    {
+        isJumping = true;
+        boxCollider.enabled = false;
+        float halfDuration = jumpDuration / 2;
+        Vector3 targetScale = originalScale * jumpScaleMultiplier;
+
+        float time = 0;
+        while (time < halfDuration)
+        {
+            time += Time.deltaTime;
+            float lerp = time / halfDuration;
+            transform.localScale = Vector3.Lerp(originalScale, targetScale, lerp);
+            yield return null;
+        }
+
+        time = 0f;
+        while (time < halfDuration)
+        {
+            time += Time.deltaTime;
+            float lerp = time / halfDuration;
+            transform.localScale = Vector3.Lerp(targetScale, originalScale, lerp);
+            yield return null;
+        }
+
+        transform.localScale = originalScale;
+        boxCollider.enabled = true;
+        yield return new WaitForSeconds(jumpCooldown);
+        isJumping = false;
     }
 }
