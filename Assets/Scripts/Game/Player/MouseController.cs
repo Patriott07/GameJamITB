@@ -25,13 +25,17 @@ public class MouseController : MonoBehaviour
 
 
     Camera mainCamera;
-    bool controll, isJumping, abovePushable;
+    public bool isJumping;
+    bool controll, abovePushable, naikVakum;
     BoxCollider2D boxCollider;
     Vector3 originalScale;
+
+    public static MouseController instance;
 
 
     private void Start()
     {
+        instance = this;
         mainCamera = Camera.main;
         boxCollider = GetComponent<BoxCollider2D>();
         originalScale = transform.localScale;
@@ -93,7 +97,10 @@ public class MouseController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        controll = true;
+        if(!naikVakum)
+        {
+            controll = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -162,6 +169,10 @@ public class MouseController : MonoBehaviour
         }
 
         transform.localScale = originalScale;
+        if (naikVakum)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
 
         yield return new WaitForSeconds(jumpCooldown);
         isJumping = false;
@@ -196,5 +207,23 @@ public class MouseController : MonoBehaviour
         boxCollider.enabled = true;
         yield return new WaitForSeconds(jumpCooldown);
         isJumping = false;
+    }
+
+    public void NaikVakum()
+    {
+        naikVakum = true;
+        boxCollider.enabled = false;
+        controll = false;
+        transform.localScale = new Vector3(1, 1, 1);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    public void TurunVakum()
+    {
+        transform.SetParent(null);
+        controll = true;
+        naikVakum = false;
+        transform.localScale = originalScale;
+        boxCollider.enabled = true;
     }
 }
