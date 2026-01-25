@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Kaca
   - Pushable
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -13,8 +13,8 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
-  - Obstacle
+  - 
+  - 
   - 
   - 
   - 

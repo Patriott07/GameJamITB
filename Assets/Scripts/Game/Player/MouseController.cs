@@ -13,8 +13,16 @@ public class MouseController : MonoBehaviour
     public float jumpDuration = 1f;
     public float jumpCooldown = 0.3f;
 
+    [Header("Head Anchor")]
+    public float headOffset = 0.6f;
+
+
     [Header("Push")]
     [SerializeField] private float pushForce = 8f;
+
+    [Header("Rotation")]
+    public float rotationSpeed = 720f;
+
 
     Camera mainCamera;
     bool controll, isJumping, abovePushable;
@@ -49,16 +57,34 @@ public class MouseController : MonoBehaviour
 
     private void FollowMouseWithDynamicSpeed()
     {
-        Vector2 targetPos = GetWorldPosFromMouse();
-        float distance = Vector2.Distance(transform.position, targetPos);
+        Vector2 mouseWorldPos = GetWorldPosFromMouse();
+
+        Vector2 toMouseDir = (mouseWorldPos - (Vector2)transform.position).normalized;
+
+        Vector2 anchoredTargetPos = mouseWorldPos - toMouseDir * headOffset;
+
+        Vector2 currentPos = transform.position;
+        float distance = Vector2.Distance(currentPos, anchoredTargetPos);
 
         float t = Mathf.Clamp01(distance / maxDistance);
-
         float currentSpeed = Mathf.Lerp(minSpeed, maxSpeed, t);
 
+        Vector2 newPos = Vector2.MoveTowards(currentPos, anchoredTargetPos, currentSpeed * Time.deltaTime);
 
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, currentSpeed * Time.deltaTime);
+        Vector2 aimDir = mouseWorldPos - (Vector2)transform.position;
+
+        if (aimDir.sqrMagnitude > 0.0001f)
+        {
+            float angle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;
+            Quaternion targetRot = Quaternion.Euler(0, 0, angle);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
+        }
+
+        transform.position = newPos;
     }
+
+
 
     private Vector2 GetWorldPosFromMouse()
     {
@@ -72,7 +98,7 @@ public class MouseController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Kaca")
+        if (collision.gameObject.tag == "Obstacle")
         {
             Debug.Log("Kalah");
         }
