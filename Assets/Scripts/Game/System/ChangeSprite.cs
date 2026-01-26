@@ -13,7 +13,7 @@ public class ChangeSprite : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") || collision.CompareTag("Pushable"))
         {
             StartCoroutine(ChangeImage());
         }
@@ -21,8 +21,9 @@ public class ChangeSprite : MonoBehaviour
     public IEnumerator ChangeImage()
     {
         spriteRenderer.sprite = sprite;
-        yield return new WaitForSeconds(0.5f);
-        MouseController.instance.lose.SetActive(true);
+        MouseController.instance.controll = false;
+        yield return new WaitForSeconds(0.2f);
         Time.timeScale = 0;
+        MouseController.instance.lose.SetActive(true);
     }
 }

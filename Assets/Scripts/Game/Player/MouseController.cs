@@ -116,6 +116,7 @@ public class MouseController : MonoBehaviour
         else if (collision.gameObject.tag == "Finish")
         {
             Debug.Log("Menang");
+            win.SetActive(true);
             controll = false;
         }
     }
