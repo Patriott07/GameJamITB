@@ -23,10 +23,14 @@ public class MouseController : MonoBehaviour
     [Header("Rotation")]
     public float rotationSpeed = 720f;
 
+    [Header("Win Lose Condition")]
+    public GameObject win;
+    public GameObject lose;
+
 
     Camera mainCamera;
-    public bool isJumping;
-    bool controll, abovePushable, naikVakum;
+    public bool isJumping, controll;
+    bool abovePushable, naikVakum;
     BoxCollider2D boxCollider;
     Vector3 originalScale;
 
