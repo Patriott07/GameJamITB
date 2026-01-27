@@ -21,6 +21,7 @@ public class ChangeSprite : MonoBehaviour
     public IEnumerator ChangeImage()
     {
         spriteRenderer.sprite = sprite;
+        MouseController.instance.kalah = true;
         MouseController.instance.controll = false;
         yield return new WaitForSeconds(0.2f);
         Time.timeScale = 0;

@@ -179,8 +179,15 @@ MonoBehaviour:
   maxSpeed: 15
   maxDistance: 6
   jumpScaleMultiplier: 1.3
-  jumpDuration: 0.3
+  jumpDuration: 0.33
   jumpCooldown: 0.3
   headOffset: 0.6
   pushForce: 8
   rotationSpeed: 720
+  win: {fileID: 0}
+  lose: {fileID: 0}
+  isJumping: 0
+  controll: 0
+  abovePushable: 0
+  kalah: 0
+  naikBox: 0

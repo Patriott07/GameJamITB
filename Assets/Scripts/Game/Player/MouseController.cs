@@ -27,10 +27,11 @@ public class MouseController : MonoBehaviour
     public GameObject win;
     public GameObject lose;
 
-
     Camera mainCamera;
-    public bool isJumping, controll;
-    bool abovePushable, naikVakum;
+    Rigidbody2D rb;
+    [HideInInspector]
+    public bool isJumping, controll, abovePushable, kalah;
+    bool naikVakum;
     BoxCollider2D boxCollider;
     Vector3 originalScale;
 
@@ -41,6 +42,7 @@ public class MouseController : MonoBehaviour
     {
         instance = this;
         mainCamera = Camera.main;
+        rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         originalScale = transform.localScale;
     }
@@ -61,6 +63,10 @@ public class MouseController : MonoBehaviour
             }
         }
 
+        if (abovePushable)
+        {
+            transform.localPosition = Vector3.zero;
+        }
     }
 
     private void FollowMouseWithDynamicSpeed()
@@ -115,9 +121,12 @@ public class MouseController : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Finish")
         {
-            Debug.Log("Menang");
-            win.SetActive(true);
-            controll = false;
+            if (!kalah)
+            {
+                Debug.Log("Menang");
+                win.SetActive(true);
+                controll = false;
+            }
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
@@ -130,24 +139,8 @@ public class MouseController : MonoBehaviour
                 Vector2 dir = (collision.transform.position - transform.position).normalized;
                 pushable.Push(dir * pushForce);
             }
-
-            if (isJumping && !abovePushable)
-            {
-                boxCollider.isTrigger = true;
-                abovePushable = true;
-            }
         }
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Pushable")
-        {
-            abovePushable = false;
-            boxCollider.isTrigger = false;
-        }
-    }
-
 
     private IEnumerator Jumping()
     {
@@ -185,6 +178,7 @@ public class MouseController : MonoBehaviour
 
     private IEnumerator JumpingAbovePushable()
     {
+        abovePushable = false;
         isJumping = true;
         boxCollider.enabled = false;
         float halfDuration = jumpDuration / 2;
@@ -210,6 +204,7 @@ public class MouseController : MonoBehaviour
 
         transform.localScale = originalScale;
         boxCollider.enabled = true;
+        transform.SetParent(null);
         yield return new WaitForSeconds(jumpCooldown);
         isJumping = false;
     }
@@ -219,7 +214,7 @@ public class MouseController : MonoBehaviour
         naikVakum = true;
         boxCollider.enabled = false;
         controll = false;
-        transform.localScale = new Vector3(1, 1, 1);
+        transform.localScale = Vector3.one;
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
@@ -230,5 +225,12 @@ public class MouseController : MonoBehaviour
         naikVakum = false;
         transform.localScale = originalScale;
         boxCollider.enabled = true;
+    }
+
+    public void NaikBox()
+    {
+        abovePushable = true;
+        boxCollider.enabled = false;
+        transform.localScale = Vector3.one;
     }
 }
