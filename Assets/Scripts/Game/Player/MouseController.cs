@@ -67,6 +67,10 @@ public class MouseController : MonoBehaviour
         {
             transform.localPosition = Vector3.zero;
         }
+        else if (naikVakum)
+        {
+            transform.localPosition = Vector3.zero;
+        }
     }
 
     private void FollowMouseWithDynamicSpeed()
@@ -167,7 +171,7 @@ public class MouseController : MonoBehaviour
         }
 
         transform.localScale = originalScale;
-        if (naikVakum)
+        if (naikVakum || abovePushable)
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
@@ -178,6 +182,8 @@ public class MouseController : MonoBehaviour
 
     private IEnumerator JumpingAbovePushable()
     {
+        transform.SetParent(null);
+        transform.localScale = originalScale;
         abovePushable = false;
         isJumping = true;
         boxCollider.enabled = false;
@@ -202,9 +208,7 @@ public class MouseController : MonoBehaviour
             yield return null;
         }
 
-        transform.localScale = originalScale;
         boxCollider.enabled = true;
-        transform.SetParent(null);
         yield return new WaitForSeconds(jumpCooldown);
         isJumping = false;
     }

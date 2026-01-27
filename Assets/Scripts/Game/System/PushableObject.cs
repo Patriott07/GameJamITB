@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 public class PushableObject : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PushableObject : MonoBehaviour
         if (MouseController.instance.abovePushable && Input.GetMouseButtonDown(1))
         {
             col.isTrigger = true;
+            StartCoroutine(Delay(1));
+            col.isTrigger = false;
         }
     }
 
@@ -32,7 +35,6 @@ public class PushableObject : MonoBehaviour
         {
             Debug.Log("kalah");
         }
-
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -52,11 +54,16 @@ public class PushableObject : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private IEnumerator Delay(float delay)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            col.isTrigger = false;
-        }
+        yield return new WaitForSeconds(delay);
     }
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        col.isTrigger = false;
+    //    }
+    //}
 }
