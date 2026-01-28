@@ -9,17 +9,22 @@ public class Menu : MonoBehaviour
     {
         if (Input.mouseScrollDelta.y > 0 || Input.mouseScrollDelta.y < 0)
         {
-            if (panel != null)
+            if (MouseController.instance.kalah == false && MouseController.instance.menang == false)
             {
-                panel.SetActive(true);
-                Time.timeScale = 0;
-                MouseController.instance.controll = false;
+                if (panel != null)
+                {
+                    ChangeCursor.instance.SetDefaultCursor();
+                    panel.SetActive(true);
+                    Time.timeScale = 0;
+                    MouseController.instance.controll = false;
+                }
             }
         }
     }
 
     void Resume()
     {
+        ChangeCursor.instance.SetGameCursor();
         panel.SetActive(false);
         Time.timeScale = 1;
     }
@@ -27,5 +32,6 @@ public class Menu : MonoBehaviour
     void ChangeScene(string scene)
     {
         SceneManager.LoadScene(scene);
+        ChangeCursor.instance.SetGameCursor();
     }
 }

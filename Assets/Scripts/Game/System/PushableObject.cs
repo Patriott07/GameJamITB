@@ -33,7 +33,8 @@ public class PushableObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Kaca")
         {
-            Debug.Log("kalah");
+            MouseController.instance.lose.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 
@@ -58,12 +59,4 @@ public class PushableObject : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
     }
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Player"))
-    //    {
-    //        col.isTrigger = false;
-    //    }
-    //}
 }

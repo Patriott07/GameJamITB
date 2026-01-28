@@ -33,6 +33,12 @@ public class Vakum : MonoBehaviour
         col = GetComponent<Collider2D>();
 
         startPos = transform.position;
+        if (vertical && !horizontal)
+            currentState = MoveState.Up;
+        else if (horizontal && !vertical)
+            currentState = MoveState.Right;
+        else
+            currentState = MoveState.Right;
         SetNextTarget();
     }
 
@@ -50,8 +56,6 @@ public class Vakum : MonoBehaviour
                 col.isTrigger = true;
                 MouseController.instance.TurunVakum();
                 isControled = false;
-
-                startPos = transform.position;
                 currentState = MoveState.Right;
                 SetNextTarget();
             }
