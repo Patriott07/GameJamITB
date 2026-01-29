@@ -21,7 +21,7 @@ public class HUDUIManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.mouseScrollDelta.y > 0 || Input.mouseScrollDelta.y < 0)
         {
             AudioManager.Instance.PlayObjectAudio(AudioManager.Instance.openPaper);
             if (isPaused)
