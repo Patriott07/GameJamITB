@@ -65,7 +65,7 @@ public class HUDUIManager : MonoBehaviour
         SidePanelAnimator.Play("SidePanel_out", 0, 0f);
         isPaused = !isPaused;
 
-        MouseController.instance.controll = true;
+        //MouseController.instance.controll = true;
     }
 
     public void PlaySfx(AudioClip audioClip)
