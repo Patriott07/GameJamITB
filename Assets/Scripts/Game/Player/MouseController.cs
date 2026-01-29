@@ -27,10 +27,13 @@ public class MouseController : MonoBehaviour
     public GameObject win;
     public GameObject lose;
 
+    Vector2 lastPosition;
 
     Camera mainCamera;
-    public bool isJumping, controll;
-    bool abovePushable, naikVakum;
+    Animator animator;
+    [HideInInspector]
+    public bool isJumping, controll, abovePushable, kalah, menang;
+    bool naikVakum;
     BoxCollider2D boxCollider;
     Vector3 originalScale;
 
@@ -40,9 +43,12 @@ public class MouseController : MonoBehaviour
     private void Start()
     {
         instance = this;
+        animator = GetComponent<Animator>();
         mainCamera = Camera.main;
         boxCollider = GetComponent<BoxCollider2D>();
         originalScale = transform.localScale;
+        lastPosition = transform.position;
+        ChangeCursor.instance.SetGameCursor();
     }
 
     private void Update()
@@ -60,6 +66,16 @@ public class MouseController : MonoBehaviour
                 StartCoroutine(JumpingAbovePushable());
             }
         }
+
+        if (abovePushable)
+        {
+            transform.localPosition = Vector3.zero;
+        }
+        else if (naikVakum)
+        {
+            transform.localPosition = Vector3.zero;
+        }
+        UpdateAnimation();
 
     }
 
@@ -109,15 +125,16 @@ public class MouseController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
+        if (collision.gameObject.tag == "Finish")
         {
-            Debug.Log("Kalah");
-        }
-        else if (collision.gameObject.tag == "Finish")
-        {
-            Debug.Log("Menang");
-            win.SetActive(true);
-            controll = false;
+            if (!kalah)
+            {
+                ChangeCursor.instance.SetDefaultCursor();
+                menang = true;
+                Debug.Log("Menang");
+                win.SetActive(true);
+                controll = false;
+            }
         }
     }
     private void OnCollisionStay2D(Collision2D collision)
@@ -130,24 +147,8 @@ public class MouseController : MonoBehaviour
                 Vector2 dir = (collision.transform.position - transform.position).normalized;
                 pushable.Push(dir * pushForce);
             }
-
-            if (isJumping && !abovePushable)
-            {
-                boxCollider.isTrigger = true;
-                abovePushable = true;
-            }
         }
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Pushable")
-        {
-            abovePushable = false;
-            boxCollider.isTrigger = false;
-        }
-    }
-
 
     private IEnumerator Jumping()
     {
@@ -174,10 +175,6 @@ public class MouseController : MonoBehaviour
         }
 
         transform.localScale = originalScale;
-        if (naikVakum)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
-        }
 
         yield return new WaitForSeconds(jumpCooldown);
         isJumping = false;
@@ -185,6 +182,9 @@ public class MouseController : MonoBehaviour
 
     private IEnumerator JumpingAbovePushable()
     {
+        transform.SetParent(null);
+        transform.localScale = originalScale;
+        abovePushable = false;
         isJumping = true;
         boxCollider.enabled = false;
         float halfDuration = jumpDuration / 2;
@@ -208,27 +208,60 @@ public class MouseController : MonoBehaviour
             yield return null;
         }
 
-        transform.localScale = originalScale;
         boxCollider.enabled = true;
         yield return new WaitForSeconds(jumpCooldown);
         isJumping = false;
     }
+
+    private void UpdateAnimation()
+    {
+        Vector2 currentPos = transform.position;
+
+        bool isMoving = Vector2.Distance(currentPos, lastPosition) > 0.001f;
+
+        if (abovePushable || naikVakum)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("onTop", true);
+        }
+        else
+        {
+            animator.SetBool("onTop", false);
+            animator.SetBool("isWalking", isMoving);
+        }
+
+        lastPosition = currentPos;
+
+        if (abovePushable || naikVakum)
+        {
+            transform.localScale = Vector3.one;
+        }
+    }
+
 
     public void NaikVakum()
     {
         naikVakum = true;
         boxCollider.enabled = false;
         controll = false;
-        transform.localScale = new Vector3(1, 1, 1);
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        transform.localScale = originalScale;
+        transform.localRotation = Quaternion.Euler(0, 0, 180);
     }
 
     public void TurunVakum()
     {
+        StartCoroutine(Jumping());
         transform.SetParent(null);
         controll = true;
         naikVakum = false;
         transform.localScale = originalScale;
-        boxCollider.enabled = true;
+        boxCollider.enabled = true; 
+    }
+
+    public void NaikBox()
+    {
+        abovePushable = true;
+        boxCollider.enabled = false;
+        transform.localScale = Vector3.one;
     }
 }
