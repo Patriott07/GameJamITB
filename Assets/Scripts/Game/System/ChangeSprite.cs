@@ -13,8 +13,10 @@ public class ChangeSprite : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // state kalah
         if (collision.CompareTag("Player") || collision.CompareTag("Pushable") || collision.CompareTag("Vakum"))
         {
+            Debug.Log("Kamu kalah");
             StartCoroutine(ChangeImage());
         }
     }
@@ -26,6 +28,6 @@ public class ChangeSprite : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         Time.timeScale = 0;
         ChangeCursor.instance.SetDefaultCursor();
-        MouseController.instance.lose.SetActive(true);
+        MouseController.instance.SetCanvasGroup(MouseController.instance.loseCanvasGroup, true);
     }
 }

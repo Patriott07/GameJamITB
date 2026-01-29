@@ -27,6 +27,10 @@ public class MouseController : MonoBehaviour
     public GameObject win;
     public GameObject lose;
 
+    [Header("Win Lose Components")]
+    [SerializeField] public CanvasGroup winCanvasGroup;
+    [SerializeField] public CanvasGroup loseCanvasGroup;
+
     Vector2 lastPosition;
 
     Camera mainCamera;
@@ -49,6 +53,10 @@ public class MouseController : MonoBehaviour
         originalScale = transform.localScale;
         lastPosition = transform.position;
         ChangeCursor.instance.SetGameCursor();
+
+        // Hide win lose UI
+        SetCanvasGroup(winCanvasGroup, false);
+        SetCanvasGroup(loseCanvasGroup, false);
     }
 
     private void Update()
@@ -110,14 +118,14 @@ public class MouseController : MonoBehaviour
 
 
 
-    private Vector2 GetWorldPosFromMouse()
+    public Vector2 GetWorldPosFromMouse()
     {
         return mainCamera.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private void OnMouseDown()
     {
-        if(!naikVakum)
+        if (!naikVakum)
         {
             controll = true;
         }
@@ -125,6 +133,7 @@ public class MouseController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //  Finish Code
         if (collision.gameObject.tag == "Finish")
         {
             if (!kalah)
@@ -132,7 +141,14 @@ public class MouseController : MonoBehaviour
                 ChangeCursor.instance.SetDefaultCursor();
                 menang = true;
                 Debug.Log("Menang");
-                win.SetActive(true);
+                // win.SetActive(true);
+                SetCanvasGroup(winCanvasGroup, true);
+
+                // Update Last Level dan Level Play
+                int currentLevel = PlayerPrefs.GetInt("LevelPlay", 1);
+                if (PlayerPrefs.GetInt("LastLevel") < currentLevel)
+                    PlayerPrefs.SetInt("LastLevel", currentLevel + 1);
+                
                 controll = false;
             }
         }
@@ -255,7 +271,7 @@ public class MouseController : MonoBehaviour
         controll = true;
         naikVakum = false;
         transform.localScale = originalScale;
-        boxCollider.enabled = true; 
+        boxCollider.enabled = true;
     }
 
     public void NaikBox()
@@ -263,5 +279,21 @@ public class MouseController : MonoBehaviour
         abovePushable = true;
         boxCollider.enabled = false;
         transform.localScale = Vector3.one;
+    }
+
+    public void SetCanvasGroup(CanvasGroup canvasGroup, bool isActive)
+    {
+        if (isActive)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+        else
+        {
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 }

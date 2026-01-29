@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Vakum : MonoBehaviour
 {
@@ -176,11 +177,16 @@ public class Vakum : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!vakumBaik && collision.gameObject.tag == "Player")
+        if (!vakumBaik && collision.gameObject.tag == "Player" && MouseController.instance.kalah == false)
         {
+            // Kalah
             Debug.Log("Kalah");
             Time.timeScale = 0;
-            MouseController.instance.lose.SetActive(true);
+            MouseController.instance.kalah = true;
+            MouseController.instance.controll = false;
+            ChangeCursor.instance.SetDefaultCursor();
+            MouseController.instance.SetCanvasGroup(MouseController.instance.loseCanvasGroup, true);
+            // MouseController.instance.lose.SetActive(true);
         }
     }
 

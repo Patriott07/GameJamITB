@@ -116,6 +116,7 @@ public class LevelUIManager : MonoBehaviour
     public void PlayLevel()
     {
         StartCoroutine(LoadSceneWithTransition("Level" + level.ToString()));
+        PlayerPrefs.SetInt("LevelPlay", level);
     }
 
     public void UpdateCanvasGroup(bool isActive, CanvasGroup canvasGroup)
