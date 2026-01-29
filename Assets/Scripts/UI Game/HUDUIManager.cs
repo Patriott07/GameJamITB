@@ -38,7 +38,6 @@ public class HUDUIManager : MonoBehaviour
         MouseController.instance.SetCanvasGroup(MouseController.instance.winCanvasGroup, false);
 
         StartCoroutine(LoadSceneWithTransition(SceneManager.GetActiveScene().name));
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void NextLevel()
