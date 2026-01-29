@@ -17,7 +17,6 @@ public class RedirectSceneAfterTime : MonoBehaviour
     {
         SceneManager.LoadScene("Transition_in", LoadSceneMode.Additive);
         yield return new WaitForSeconds(3f);
-
     }
 
     IEnumerator RedirectToNewScene()
@@ -25,6 +24,10 @@ public class RedirectSceneAfterTime : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
         StartCoroutine(PrepareTransition());
         yield return new WaitForSeconds(3f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void Skip(){
+        SceneManager.LoadScene("Home");
     }
 }
