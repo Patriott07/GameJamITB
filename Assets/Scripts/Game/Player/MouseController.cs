@@ -142,7 +142,6 @@ public class MouseController : MonoBehaviour
                 ChangeCursor.instance.SetDefaultCursor();
                 menang = true;
                 Debug.Log("Menang");
-                // win.SetActive(true);
                 SetCanvasGroup(winCanvasGroup, true);
 
                 // Update Last Level dan Level Play

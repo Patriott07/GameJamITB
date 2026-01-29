@@ -6055,6 +6055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalAudioSource: {fileID: 1697099014}
   SidePanelAnimator: {fileID: 1032043493}
+  thisLevelHasTutorial: 0
 --- !u!114 &1704228322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7193,7 +7194,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.9254902, g: 0.9254902, b: 0.9254902, a: 0}
+  m_BackGroundColor: {r: 0.69411767, g: 0.54901963, b: 0.38039216, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
