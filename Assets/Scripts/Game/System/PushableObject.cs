@@ -8,6 +8,8 @@ public class PushableObject : MonoBehaviour
     Collider2D col;
     public Transform snapPoint;
 
+    bool isCanMakeSound = true;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,6 +26,14 @@ public class PushableObject : MonoBehaviour
         }
     }
 
+    IEnumerator PlaySoundPush()
+    {
+        isCanMakeSound = false;
+        AudioManager.Instance.PlayObjectAudio(AudioManager.Instance.catDorongBox);
+        yield return new WaitForSeconds(1f);
+        isCanMakeSound = true;
+    }
+
     public void Push(Vector2 force)
     {
         rb.AddForce(force / pushResistance, ForceMode2D.Force);
@@ -33,15 +43,23 @@ public class PushableObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Kaca")
         {
-            MouseController.instance.lose.SetActive(true);
+            // MouseController.instance.lose.SetActive(true);
             Time.timeScale = 0;
+            MouseController.instance.kalah = true;
+            MouseController.instance.controll = false;
+            ChangeCursor.instance.SetDefaultCursor();
+            MouseController.instance.SetCanvasGroup(MouseController.instance.loseCanvasGroup, true);
+            AudioManager.Instance.PlayLoseAudio();
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if(MouseController.instance.isJumping && collision.gameObject.CompareTag("Player"))
-        { 
+        if (MouseController.instance.isJumping && collision.gameObject.CompareTag("Player"))
+        {
+            if(isCanMakeSound) 
+                StartCoroutine(PlaySoundPush());
+
             Vector3 targetPos;
 
             if (snapPoint != null)

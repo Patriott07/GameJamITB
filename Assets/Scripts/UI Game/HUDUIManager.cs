@@ -10,14 +10,18 @@ public class HUDUIManager : MonoBehaviour
     [Header("Settings Components")]
     [SerializeField] private Animator SidePanelAnimator;
 
-
-
     bool isPaused = false;
+
+    void Start()
+    {
+        
+    }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return))
         {
+            AudioManager.Instance.PlayObjectAudio(AudioManager.Instance.openPaper);
             if (isPaused)
                 ClosePausedMenu();
             else
@@ -38,7 +42,7 @@ public class HUDUIManager : MonoBehaviour
     public void NextLevel()
     {
         int currentLevel = PlayerPrefs.GetInt("LevelPlay", 1);
-        PlayerPrefs.SetInt("LevelPlay", PlayerPrefs.GetInt("LevelPlay") + 1);
+        PlayerPrefs.SetInt("LevelPlay", currentLevel + 1);
         StartCoroutine(LoadSceneWithTransition("Level" + (currentLevel + 1)));
     }
 

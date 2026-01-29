@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8342983966560182325}
   - component: {fileID: 8104009748677502777}
   - component: {fileID: 3391528774079852333}
+  - component: {fileID: 20556680657151089}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -187,10 +188,13 @@ MonoBehaviour:
   rotationSpeed: 720
   win: {fileID: 0}
   lose: {fileID: 0}
+  winCanvasGroup: {fileID: 0}
+  loseCanvasGroup: {fileID: 0}
   isJumping: 0
   controll: 0
   abovePushable: 0
   kalah: 0
+  menang: 0
 --- !u!95 &3391528774079852333
 Animator:
   serializedVersion: 7
@@ -213,3 +217,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &20556680657151089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5193387310467120769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94baa2270888d954eb91b51d7d82ee11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catSounds:
+  - {fileID: 8300000, guid: 8deaaa83a0e4d394f8998f770620cf6c, type: 3}
+  - {fileID: 8300000, guid: 9aeb395b12a486a46b9ae01b372a1761, type: 3}
+  - {fileID: 8300000, guid: 38a0e8f05bf7e0548961bfbe5c72cdb7, type: 3}
+  AudioSourceCat: {fileID: 0}
+  minPitch: 0.9
+  maxPitch: 1.1
+  delayCatSound: 4.5

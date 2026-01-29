@@ -84,27 +84,32 @@ public class LevelUIManager : MonoBehaviour
 
     public void AddLevelUI()
     {
-        if (level == levelMax)
+        if (level >= levelMax)
         {
             UpdateCanvasGroup(false, plusIconCG);
             return;
         }
-        level += 1;
+
+        level++;
         UpdateLevelDayUI();
-        UpdateCanvasGroup(true, plusIconCG);
+
+        UpdateCanvasGroup(level < levelMax, plusIconCG);
+        UpdateCanvasGroup(level > 1, minusIconCG);
     }
 
     public void DecreaseLevelUI()
     {
-        if (level == 1)
+        if (level <= 1)
         {
             UpdateCanvasGroup(false, minusIconCG);
             return;
         }
 
-        level -= 1;
+        level--;
         UpdateLevelDayUI();
-        UpdateCanvasGroup(true, minusIconCG);
+
+        UpdateCanvasGroup(level < levelMax, plusIconCG);
+        UpdateCanvasGroup(level > 1, minusIconCG);
     }
 
     void UpdateLevelDayUI()

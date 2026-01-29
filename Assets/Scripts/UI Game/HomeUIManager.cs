@@ -38,7 +38,7 @@ public class HomeUIManager : MonoBehaviour
     public void ShowCredits()
     {
         Debug.Log("Credits Shown");
-        StartCoroutine(LoadSceneWithTransition("ChooseLevel"));
+        StartCoroutine(LoadSceneWithTransition("Credit"));
 
     }
 

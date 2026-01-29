@@ -138,6 +138,7 @@ public class MouseController : MonoBehaviour
         {
             if (!kalah)
             {
+                AudioManager.Instance.PlayWinAudio();
                 ChangeCursor.instance.SetDefaultCursor();
                 menang = true;
                 Debug.Log("Menang");

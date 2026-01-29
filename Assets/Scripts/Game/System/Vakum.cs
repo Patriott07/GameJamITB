@@ -186,8 +186,18 @@ public class Vakum : MonoBehaviour
             MouseController.instance.controll = false;
             ChangeCursor.instance.SetDefaultCursor();
             MouseController.instance.SetCanvasGroup(MouseController.instance.loseCanvasGroup, true);
-            // MouseController.instance.lose.SetActive(true);
+            AudioManager.Instance.PlayLoseAudio();
+            AudioManager.Instance.CatScream();
         }
+
+        if (collision.gameObject.tag == "Player")
+        {
+            // play sound kucing mraww
+            AudioManager.Instance.PlayObjectAudio(AudioManager.Instance.catNabrakRobot);
+
+        }
+
+
     }
 
     private void FollowMouseWithDynamicSpeed()
