@@ -90,6 +90,7 @@ public class HUDUIManager : MonoBehaviour
     public void BackToHome(string sceneName = "Home")
     {
         Time.timeScale = 1f;
+        ChangeCursor.instance.SetDefaultCursor();
         StartCoroutine(LoadSceneWithTransition(sceneName));
     }
 
