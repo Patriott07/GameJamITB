@@ -1010,8 +1010,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5576676136068358282, guid: cca79ad944ada674eafd70f9347cfd80, type: 2}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 85bdd0f468e2e5545adac58b90e2325c, type: 3}
+  m_Resource: {fileID: 8300000, guid: 85bdd0f468e2e5545adac58b90e2325c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1595,7 +1595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17490cdb3e65c644bbf8bd479cc25ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverColor: {r: 1, g: 0.7019608, b: 0.27058825, a: 1}
+  hoverColor: {r: 0.8509804, g: 0.50980395, b: 0, a: 1}
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -2509,7 +2509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17490cdb3e65c644bbf8bd479cc25ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverColor: {r: 1, g: 0.7019608, b: 0.27058825, a: 1}
+  hoverColor: {r: 0.8509804, g: 0.50980395, b: 0, a: 1}
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -4565,6 +4565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalAudioSource: {fileID: 615638635}
   SidePanelAnimator: {fileID: 939461461}
+  thisLevelHasTutorial: 1
 --- !u!4 &956431410
 Transform:
   m_ObjectHideFlags: 0
@@ -4966,11 +4967,11 @@ Transform:
   m_GameObject: {fileID: 1096413795}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -960, y: -540, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
   m_LocalScale: {x: 0.56666666, y: 0.56666666, z: 0.56666666}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1566505665}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1194717985
 PrefabInstance:
@@ -5110,6 +5111,7 @@ MonoBehaviour:
   catNabrakRobot: {fileID: 8300000, guid: d504648804239614f8984b53f968b634, type: 3}
   catDorongBox: {fileID: 8300000, guid: a643d3240867fd04db91c0cd605bdbc2, type: 3}
   catScream: {fileID: 8300000, guid: 9aeb395b12a486a46b9ae01b372a1761, type: 3}
+  openPaper: {fileID: 0}
 --- !u!1001 &1291178212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6199,7 +6201,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 939461465}
-  - {fileID: 1096413797}
   - {fileID: 973810020}
   - {fileID: 2105240455}
   m_Father: {fileID: 0}
@@ -8462,6 +8463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1986784259}
   - component: {fileID: 1986784260}
+  - component: {fileID: 1986784261}
   m_Layer: 0
   m_Name: Load Scene
   m_TagString: Untagged
@@ -8499,6 +8501,21 @@ MonoBehaviour:
   sceneName: Transition_out
   afterShowFading: 1
   delayTime: 4
+--- !u!114 &1986784261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986784258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d2a6b47f9bbdb4c8e5643ea963974e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Tutorial6
+  afterShowFading: 0
+  delayTime: 1
 --- !u!4 &2036388391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2701998802201715597, guid: df529d9709a68e140930072802a0a1c0, type: 3}
@@ -8991,4 +9008,5 @@ SceneRoots:
   - {fileID: 1464097914}
   - {fileID: 750473085}
   - {fileID: 1725391271}
+  - {fileID: 1096413797}
   - {fileID: 1566505665}

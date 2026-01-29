@@ -10,11 +10,13 @@ public class HUDUIManager : MonoBehaviour
     [Header("Settings Components")]
     [SerializeField] private Animator SidePanelAnimator;
 
+    [Header("Tutorial Setting")]
+    [SerializeField] bool thisLevelHasTutorial = false;
     bool isPaused = false;
 
     void Start()
     {
-        
+        if(thisLevelHasTutorial) MouseController.instance.controll = false;
     }
 
     void Update()

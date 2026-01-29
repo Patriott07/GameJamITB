@@ -286,6 +286,7 @@ MonoBehaviour:
   catNabrakRobot: {fileID: 8300000, guid: d504648804239614f8984b53f968b634, type: 3}
   catDorongBox: {fileID: 8300000, guid: a643d3240867fd04db91c0cd605bdbc2, type: 3}
   catScream: {fileID: 8300000, guid: 9aeb395b12a486a46b9ae01b372a1761, type: 3}
+  openPaper: {fileID: 0}
 --- !u!1 &186106942
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17490cdb3e65c644bbf8bd479cc25ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverColor: {r: 1, g: 0.7019608, b: 0.27058825, a: 1}
+  hoverColor: {r: 0.8509804, g: 0.50980395, b: 0, a: 1}
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -838,6 +839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 325310290}
   - component: {fileID: 325310291}
+  - component: {fileID: 325310292}
   m_Layer: 0
   m_Name: Load Scene
   m_TagString: Untagged
@@ -875,6 +877,21 @@ MonoBehaviour:
   sceneName: Transition_out
   afterShowFading: 1
   delayTime: 4
+--- !u!114 &325310292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325310289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d2a6b47f9bbdb4c8e5643ea963974e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Tutorial1
+  afterShowFading: 0
+  delayTime: 3
 --- !u!1 &329427445
 GameObject:
   m_ObjectHideFlags: 0
@@ -3807,7 +3824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17490cdb3e65c644bbf8bd479cc25ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverColor: {r: 1, g: 0.7019608, b: 0.27058825, a: 1}
+  hoverColor: {r: 0.8509804, g: 0.50980395, b: 0, a: 1}
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -4948,8 +4965,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5576676136068358282, guid: cca79ad944ada674eafd70f9347cfd80, type: 2}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 85bdd0f468e2e5545adac58b90e2325c, type: 3}
+  m_Resource: {fileID: 8300000, guid: 85bdd0f468e2e5545adac58b90e2325c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -5190,6 +5207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalAudioSource: {fileID: 562245094}
   SidePanelAnimator: {fileID: 1057002297}
+  thisLevelHasTutorial: 1
 --- !u!1 &1816242589
 GameObject:
   m_ObjectHideFlags: 0
