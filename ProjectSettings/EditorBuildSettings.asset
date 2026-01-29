@@ -8,6 +8,27 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UI/Splash.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/UI/Home.unity
+    guid: 98983942558a08a4d8040e8c32f90560
+  - enabled: 1
+    path: Assets/Scenes/UI/Transition_in.unity
+    guid: c68bea55b1358ce499aa414c92fa9175
+  - enabled: 1
+    path: Assets/Scenes/UI/Transition_out.unity
+    guid: 444e39ea8516f3043a2dc08f919320e9
+  - enabled: 1
+    path: Assets/Scenes/UI/Credit.unity
+    guid: 03987460f3b8eb040a650161e30da2e9
+  - enabled: 1
+    path: Assets/Scenes/UI/ChooseLevel.unity
+    guid: 6edc5a7e86129654492abcedc69c149b
+  - enabled: 1
+    path: Assets/Scenes/Game/Level1.unity
+    guid: b797d17a1585674479ae82c510cb7509
+  - enabled: 1
+    path: Assets/Scenes/Game/Level2.unity
+    guid: 5d90751e3989d6d4b82d5de5b7d39ba3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
